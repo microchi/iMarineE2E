@@ -22,13 +22,16 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+        
+      - uses: actions/cache@v3
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - run: yarn install      
+            
+      - run: yarn install
+
       - run: yarn cypress run --headless --browser chrome --config video=false --config pageLoadTimeout=90000
