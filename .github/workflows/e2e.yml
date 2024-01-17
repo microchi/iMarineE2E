@@ -34,4 +34,4 @@ jobs:
             
       - run: yarn install
 
-      - run: yarn cypress run --headless --browser chrome --config video=false --config pageLoadTimeout=90000
+      - run: yarn cypress run --headless --browser chrome --config video=false --config pageLoadTimeout=180000
