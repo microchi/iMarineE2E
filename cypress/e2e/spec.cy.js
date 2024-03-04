@@ -61,7 +61,10 @@ describe('example to-do app', () => {
 
   it('快捷轉自訂', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/statistics/2/0');
-    cy.get('[aria-label="自訂查詢"]').click({ force: true });
+    cy.intercept('POST', 'api/chart').as('chartAPI')
+    cy.wait('@chartAPI').then(() => {
+      cy.get('[aria-label="自訂查詢"]').click({ force: true });
+    });
 
     cy.contains('自訂維度');
   });
@@ -117,7 +120,7 @@ describe('example to-do app', () => {
 
   it('點擊海運焦點新聞-港口 會 進入 港口類新聞', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#navbar > ul > li:nth-child(4) > ul > li:nth-child(1) > a').click({ force: true });
+    cy.get('#navbar > ul > li:nth-child(4) > ul > div:nth-child(2) > li > a').click({ force: true });
     cy.contains('海運焦點新聞');
   });
 
@@ -129,7 +132,7 @@ describe('example to-do app', () => {
 
   it('點擊航港法令 - 航務法令 會 進入 航務法令', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#navbar > ul > li:nth-child(5) > ul > li:nth-child(1) > a').click({ force: true });
+    cy.get('#navbar > ul > li:nth-child(5) > ul > div:nth-child(1) > li > a > span:nth-child(1)').click({ force: true });
 
     cy.contains('航務法令');
   });
@@ -142,7 +145,7 @@ describe('example to-do app', () => {
 
   it('點擊訊息分享 會 進入 重要公告', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#navbar > ul > li:nth-child(6) > ul > li:nth-child(1) > a').click({ force: true });
+    cy.get('#navbar > ul > li:nth-child(6) > ul > div:nth-child(1) > li > a > span:nth-child(1)').click({ force: true });
 
     cy.get('.view-title > .font-bold').then((element) => {
       expect(element.text()).to.equal('重要公告');
