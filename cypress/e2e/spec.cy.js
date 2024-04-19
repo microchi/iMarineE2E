@@ -13,7 +13,7 @@ describe('example to-do app', () => {
   it('點擊搜尋 會 進入全站搜尋', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
 
-    cy.get('.p-button-icon').click({ force: true });
+    cy.get('.no-print > .pi-search').click({ force: true });
 
     cy.contains('全站搜尋');
   });
@@ -61,12 +61,12 @@ describe('example to-do app', () => {
 
   it('快捷轉自訂', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/statistics/2/0');
-    cy.intercept('POST', 'api/chart').as('chartAPI')
+    cy.intercept('POST', 'api/chart').as('chartAPI');
     cy.wait('@chartAPI').then(() => {
       cy.get('[aria-label="自訂查詢"]').click({ force: true });
-    });
 
-    cy.contains('自訂維度');
+      cy.contains('自訂維度');
+    });
   });
 
   it('點擊快捷報表報表側欄 會顯示報表 ', () => {
@@ -79,7 +79,7 @@ describe('example to-do app', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/points/100TCount');
 
     cy.get('.p-dialog-title').then((element) => {
-      console.log(element);
+      cy.contains('國籍船舶總噸100以上登記數');
     });
   });
 
@@ -154,7 +154,7 @@ describe('example to-do app', () => {
 
   it('點擊海運組織 會 進入 國外海運組織', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get(':nth-child(1) > :nth-child(7) > .nav-link > :nth-child(1)').click();
+    cy.get('#navbar > :nth-child(1) > :nth-child(7) > .nav-link > :nth-child(1)').click({ force: true });
     cy.contains('國外海運組織');
   });
 
