@@ -1,6 +1,6 @@
 // const { multiply } = require("cypress/types/lodash");
 
-describe('example to-do app', () => {
+describe('iMarine 航港發展資料庫 整合測試', () => {
   it('點擊關於我們 會 進入關於我們', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
     cy.get('#navbar > :nth-child(1) > :nth-child(1) > .nav-link > :nth-child(1)').click();
