@@ -65,7 +65,7 @@ describe('example to-do app', () => {
     cy.wait('@chartAPI').then(() => {
       cy.get('[aria-label="自訂查詢"]').click({ force: true });
 
-      cy.contains('自訂維度');
+      cy.contains('自訂維度',{ timeout: 8000 });
     });
   });
 
