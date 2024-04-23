@@ -59,7 +59,7 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
     });
   });
 
-  it.only('快捷轉自訂', () => {
+  it('快捷轉自訂', () => {
     cy.intercept('POST', 'api/chart').as('chartAPI');
     cy.visit('https://imarine.motcmpb.gov.tw/#/statistics/2/0');
     cy.wait('@chartAPI').then(() => {
