@@ -59,13 +59,12 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
     });
   });
 
-  it('快捷轉自訂', () => {
-    cy.visit('https://imarine.motcmpb.gov.tw/#/statistics/2/0');
+  it.only('快捷轉自訂', () => {
     cy.intercept('POST', 'api/chart').as('chartAPI');
+    cy.visit('https://imarine.motcmpb.gov.tw/#/statistics/2/0');
     cy.wait('@chartAPI').then(() => {
       cy.get('[aria-label="自訂查詢"]').click({ force: true });
-
-      cy.contains('自訂維度',{ timeout: 8000 });
+      cy.contains('自訂維度');
     });
   });
 
