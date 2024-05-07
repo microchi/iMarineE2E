@@ -17,6 +17,7 @@ const checkLinkByAxios = (link) =>
       headers: { Accept: '*/*', 'User-Agent': 'Thunder Client (https://www.thunderclient.com)' },
     })
     .then((o) => {
+      console.log(` OK!${link.name}`);
       progressBar.increment();
       return o.status === 200 ? null : link;
     })
@@ -45,7 +46,8 @@ checkLinksInCSV('iMarineLink.csv').then(async (o) => {
   for (let i = 0; i < o.length; i++) {
     const page = await browser.newPage();
     try {
-      await page.goto(o[i].url, { waitUntil: 'networkidle2', timeout: 0 });
+      await page.goto(o[i].url, { waitUntil: 'networkidle2' });
+      console.log(` OK!${link.name}`);
     } catch (err) {
       o[i].err = err;
       result.push(o[i]);
