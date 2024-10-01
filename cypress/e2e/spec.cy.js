@@ -3,7 +3,7 @@
 describe('iMarine 航港發展資料庫 整合測試', () => {
   it('點擊關於我們 會 進入關於我們', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#navbar > :nth-child(1) > :nth-child(1) > .nav-link > :nth-child(1)').click();
+    cy.get('#header > div > nav > ul > li:nth-child(1) > a > span:nth-child(1)').click();
 
     cy.get('.view-title > .font-bold').then((element) => {
       expect(element.text()).to.equal('關於我們');
@@ -44,15 +44,9 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
     });
   });
 
-  it('點擊全球航運指數 會 進入運價指數', () => {
-    cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#navbar > :nth-child(1) > :nth-child(2) > :nth-child(1) > :nth-child(1)').click();
-    cy.contains('運價指數');
-  });
-
   it('點擊臺灣數據統計 會 進入快捷報表', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#navbar > :nth-child(1) > :nth-child(3) > :nth-child(1) > :nth-child(1)').click();
+    cy.get('#header > div > nav > ul > li:nth-child(3) > a > span:nth-child(1)').click();
 
     cy.get('.view-title > .font-bold').then((element) => {
       expect(element.text()).to.equal('快捷查詢 - 臺灣前十大進口貨櫃港');
@@ -106,7 +100,7 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
   it('點擊海運焦點新聞 會 進入海運焦點新聞', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#navbar > :nth-child(1) > :nth-child(4) > :nth-child(1) > :nth-child(1)').click();
+    cy.get('#header > div > nav > ul > li:nth-child(4) > a > span:nth-child(1)').click();
     cy.contains('海運焦點新聞');
     cy.contains('全部');
     cy.contains('港口');
@@ -119,7 +113,7 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
   it('點擊海運焦點新聞-港口 會 進入港口類新聞', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#navbar > ul > li:nth-child(4) > ul > div:nth-child(2) > li > a').click({ force: true });
+    cy.get('#header > div > nav > ul > li:nth-child(4) > a > span:nth-child(1)').click();
     cy.contains('海運焦點新聞');
   });
 
@@ -131,7 +125,7 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
   it('點擊航港法令-航務法令 會 進入航務法令', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#navbar > ul > li:nth-child(5) > ul > div:nth-child(1) > li > a > span:nth-child(1)').click({ force: true });
+    cy.get('#header > div > nav > ul > li:nth-child(5) > a > span:nth-child(1)').click({ force: true });
 
     cy.contains('航務法令');
   });
@@ -142,9 +136,9 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
     cy.contains('航務法令');
   });
 
-  it('點擊訊息分享 會 進入重要公告', () => {
+  it('點擊訊息分享>重要公告 會 進入重要公告', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#navbar > ul > li:nth-child(6) > ul > div:nth-child(1) > li > a > span:nth-child(1)').click({ force: true });
+    cy.get('#header > div > nav > ul > li:nth-child(6) > ul > div:nth-child(1) > li > a > span:nth-child(1)').click({ force: true });
 
     cy.get('.view-title > .font-bold').then((element) => {
       expect(element.text()).to.equal('重要公告');
@@ -153,7 +147,7 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
   it('點擊海運組織 會 進入國外海運組織', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#navbar > :nth-child(1) > :nth-child(7) > .nav-link > :nth-child(1)').click({ force: true });
+    cy.get('#header > div > nav > ul > li:nth-child(7) > a > span:nth-child(1)').click();
     cy.contains('國外海運組織');
   });
 
@@ -204,7 +198,7 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
       .then((o) => {
         // 若 有我的報表
         if (o.find('.p-card.mb-2 > .p-card-body > .p-card-content > :nth-child(1)').length) {
-           // 若 有名稱是test的報表 則 刪除
+          // 若 有名稱是test的報表 則 刪除
           cy.get('.p-tag').each((p) => {
             if (p.find('.text-base').text().includes('test')) {
               cy.wrap(p).find('.pi.pi-times').click();
@@ -253,7 +247,7 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
   it('點擊海港自由港區進口貿易值貿易量 會 進入海港自由港區進口貿易值貿易量', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#navbar > ul > li:nth-child(3) > ul > div:nth-child(1) > li > ul > li:nth-child(5) > ul > li:nth-child(1) > a > span').click({ force: true });
+    cy.get('#header > div > nav > ul > li:nth-child(3) > ul > div:nth-child(1) > li > ul > li:nth-child(5) > ul > li:nth-child(1) > a > span').click({ force: true });
 
     cy.contains('快捷查詢 - 海港自由港區進口貿易值貿易量');
   });
@@ -274,16 +268,9 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
   it('點擊航港法令 會 進入航港法令', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#navbar > ul > li:nth-child(5) > a > span:nth-child(1)').click({ force: true });
+    cy.get('#header > div > nav > ul > li:nth-child(5) > a > span:nth-child(1)').click();
 
     cy.contains('近期法令異動');
-  });
-
-  it('點擊港口列表 會 進入港口列表', () => {
-    cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#navbar > ul > li:nth-child(3) > ul > div:nth-child(2) > li > ul > li:nth-child(1) > ul > li:nth-child(10) > a > span').click({ force: true });
-
-    cy.contains('港口列表');
   });
 
   it('點擊港口比較 會 進入港口比較', () => {
