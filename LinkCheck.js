@@ -40,7 +40,7 @@ const checkLinksInCSV = (filePath) => {
 };
 
 checkLinksInCSV('iMarineLink.csv').then(async (o) => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
   const result = [];
 
   for (let i = 0; i < o.length; i++) {
