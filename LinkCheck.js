@@ -47,7 +47,7 @@ checkLinksInCSV('iMarineLink.csv').then(async (o) => {
     const page = await browser.newPage();
     try {
       await page.goto(o[i].url, { waitUntil: 'networkidle2' });
-      console.log(` OK!${link.name}`);
+      console.log(` OK!${o[i].name}`);
     } catch (err) {
       o[i].err = err;
       result.push(o[i]);
