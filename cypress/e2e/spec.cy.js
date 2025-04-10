@@ -188,8 +188,8 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
   it('自訂查詢儲存報表時 會 登入並儲存名稱是test的報表', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/custom');
     cy.get('.p-dialog-footer > .p-button > .p-button-label').click();
-    cy.get('.login-box > .bi').click();
-    cy.get('.pl-0').click();
+    cy.get('.login-box > div> .bi-person').click();
+    cy.get('div > .login-button').contains(' 登入 ').click();
     cy.get(':nth-child(1) > .p-inputtext').type('test@gmail.com', { force: true });
     cy.get(':nth-child(2) > .p-inputtext').type('123456', { force: true });
     cy.get('.mt-3.text-center > .p-button').click({ force: true });
@@ -281,4 +281,41 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
     cy.contains('比較項目');
   });
+
+  it('點擊前十大進出口空實櫃貨櫃港 會 進入前十大進出口空實櫃貨櫃港', () => {
+    cy.visit('https://imarine.motcmpb.gov.tw/#/');
+    cy.get(':nth-child(1) > :nth-child(1) > :nth-child(2) > :nth-child(1) > ul > :nth-child(2) > a > span').click({ force: true });
+
+    cy.contains('快捷查詢 - 臺灣前十大實櫃進口貨櫃港');
+  });
+
+  it('點擊近十年航港局執行港口國管制檢查績效統計 會 進入近十年航港局執行港口國管制檢查績效統計', () => {
+    cy.visit('https://imarine.motcmpb.gov.tw/#/');
+    cy.get(':nth-child(2) > :nth-child(1) > :nth-child(2) > :nth-child(5) > ul > :nth-child(7) > a > span').click({ force: true });
+
+    cy.contains('近十年航港局執行港口國管制檢查績效統計');
+  });
+
+  it('點擊近十年航港局執行港口國管制檢查績效統計 會 進入近十年航港局執行港口國管制檢查績效統計', () => {
+    cy.visit('https://imarine.motcmpb.gov.tw/#/');
+    cy.get(':nth-child(2) > :nth-child(1) > :nth-child(2) > :nth-child(5) > ul > :nth-child(8) > a > span').click({ force: true });
+
+    cy.contains('近十年航港局執行港口國管制檢查缺失類型統計');
+  });
+
+  it('點擊新聞關鍵字訂閱功能時 會 登入訂閱關鍵字並確認會員資料中訂閱的關鍵字', () => {
+    cy.visit('https://imarine.motcmpb.gov.tw/#/news/subscription');
+    cy.get('.swal2-actions > button').contains('OK').click();
+    cy.get('.row > :nth-child(1) >.p-inputtext').type('test@gmail.com');
+    cy.get('.row > :nth-child(2) > .p-inputtext').type('123456');
+    cy.get('.mt-3.text-center > .p-button').click();
+    cy.get('.swal2-actions > button').contains('OK').click();
+    cy.get('.p-chips-input-token > input').type('港口', { force: true }).type('{enter}');
+    cy.get('button').contains('儲存').click();
+    cy.get('.swal2-actions > button').contains('OK').click();
+    cy.get('.p-card-content > .flex-column > :nth-child(2)').click();
+
+    cy.get('.p-chips > .p-inputtext').contains('港口');
+  });
+
 });
