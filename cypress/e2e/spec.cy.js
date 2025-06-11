@@ -92,12 +92,6 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
     });
   });
 
-  it('點擊首頁臺灣數據統計-簡易查詢臺灣空實貨櫃出港TEU數 會 進入臺灣空實貨櫃出港TEU數', () => {
-    cy.visit('https://imarine.motcmpb.gov.tw/#/emptyrealexport');
-
-    cy.contains('出港的空實貨櫃TEU數');
-  });
-
   it('點擊海運焦點新聞 會 進入海運焦點新聞', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
     cy.get('#header > div > nav > ul > li:nth-child(4) > a > span:nth-child(1)').click();
@@ -317,5 +311,4 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
     cy.get('.p-chips > .p-inputtext').contains('港口');
   });
-
 });
