@@ -3,7 +3,6 @@ const csv = require('csv-parser');
 const axios = require('axios');
 const puppeteer = require('puppeteer');
 const https = require('https');
-const { promises } = require('dns');
 const cliProgress = require('cli-progress');
 
 const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
@@ -58,11 +57,12 @@ checkLinksInCSV('iMarineLink.csv').then(async (o) => {
   }
 
   await browser.close();
-  progressBar.stop();
 
   console.log(`檢查完畢 ${result.length === 0 ? '沒有錯誤連結' : '有' + result.length + '個錯誤連結'}`);
 
   result.forEach((link) => {
     console.log(`${link.url}\t${link.name}\t${link.err}`);
   });
+
+  process.exit(0);
 });
