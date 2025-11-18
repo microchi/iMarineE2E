@@ -1,0 +1,53 @@
+name: URL Health Check
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  check-url:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check URL status
+        id: curl
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://parent.chjhs.tp.edu.tw)
+          echo "status=$STATUS" >> $GITHUB_OUTPUT
+
+      - name: Get Microsoft Graph Token
+        id: get_token
+        if: steps.curl.outputs.status == '200'
+        run: |
+          RESPONSE=$(curl -s -X POST https://login.microsoftonline.com/${{ secrets.GRAPH_TENANT_ID }}/oauth2/v2.0/token \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -d "client_id=${{ secrets.GRAPH_CLIENT_ID }}" \
+            -d "scope=https%3A%2F%2Fgraph.microsoft.com%2F.default" \
+            -d "client_secret=${{ secrets.GRAPH_CLIENT_SECRET }}" \
+            -d "grant_type=client_credentials")
+          TOKEN=$(echo "$RESPONSE" | jq -r .access_token)
+          echo "::add-mask::$TOKEN"
+          echo "token=$TOKEN" >> $GITHUB_OUTPUT
+
+      - name: Send email via Microsoft Graph
+        if: steps.curl.outputs.status == '200'
+        run: |
+          curl -X POST https://graph.microsoft.com/v1.0/users/eip@ironsecure.com.tw/sendMail \
+            -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "message": {
+                "subject": "靜心幼兒園家長會無法連線",
+                "body": {
+                  "contentType": "Text",
+                  "content": "靜心幼兒園家長會 https://parent.chjhs.tp.edu.tw 無法連線"
+                },
+                "toRecipients": [
+                  {
+                    "emailAddress": {
+                      "address": "timothy.chi@ironsecure.com.tw"
+                    }
+                  }
+                ]
+              }
+            }'
