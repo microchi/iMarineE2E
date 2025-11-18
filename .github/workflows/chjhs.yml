@@ -17,7 +17,7 @@ jobs:
 
       - name: Get Microsoft Graph Token
         id: get_token
-        if: steps.curl.outputs.status == '200'
+        if: steps.curl.outputs.status != '200'
         run: |
           RESPONSE=$(curl -s -X POST https://login.microsoftonline.com/${{ secrets.GRAPH_TENANT_ID }}/oauth2/v2.0/token \
             -H "Content-Type: application/x-www-form-urlencoded" \
@@ -30,7 +30,7 @@ jobs:
           echo "token=$TOKEN" >> $GITHUB_OUTPUT
 
       - name: Send email via Microsoft Graph
-        if: steps.curl.outputs.status == '200'
+        if: steps.curl.outputs.status != '200'
         run: |
           curl -X POST https://graph.microsoft.com/v1.0/users/eip@ironsecure.com.tw/sendMail \
             -H "Authorization: Bearer ${{ steps.get_token.outputs.token }}" \
@@ -46,6 +46,11 @@ jobs:
                   {
                     "emailAddress": {
                       "address": "timothy.chi@ironsecure.com.tw"
+                    }
+                  },
+                  {
+                    "emailAddress": {
+                      "address": "johny.hsiung@ironsecure.com.tw"
                     }
                   }
                 ]
