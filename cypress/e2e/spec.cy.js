@@ -47,7 +47,7 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
   it('點擊臺灣數據統計 會 進入快捷報表', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
     cy.get('#topbar_2 > div > a > span').click();
-    
+
     cy.get('#topbar_2_0_0_0 > div > a > div > div > span').then((element) => {
       expect(element.text()).to.equal('臺灣前十大進口貨櫃港');
     });
@@ -184,7 +184,7 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
     cy.get('.p-dialog-footer > .p-button > .p-button-label').click();
     cy.get('.login-box > div> .bi-person').click();
     cy.get('div > .login-button').contains(' 登入 ').click();
-    cy.get(':nth-child(1) > .p-inputtext').type('test@gmail.com', { force: true });
+    cy.get(':nth-child(1) > .p-inputtext').should('be.visible').type('test@gmail.com', { force: true });
     cy.get(':nth-child(2) > .p-inputtext').type('123456', { force: true });
     cy.get('.mt-3.text-center > .p-button').click({ force: true });
     cy.get('.swal2-confirm');
@@ -300,11 +300,11 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
   it('點擊新聞關鍵字訂閱功能時 會 登入訂閱關鍵字並確認會員資料中訂閱的關鍵字', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/news/subscription');
     cy.get('.swal2-actions > button').contains('OK').click();
-    cy.get('input[placeholder="Email"]').type('test@gmail.com', { force: true });
+    cy.get('input[placeholder="Email"]').should('be.visible').type('test@gmail.com', { force: true });
     cy.get('.row > :nth-child(2) > .p-inputtext').type('123456', { force: true });
     cy.get('.mt-3.text-center > .p-button').click();
     cy.get('.swal2-actions > button').contains('OK').click();
-    cy.get('.p-chips-input-token > input').type('港口', { force: true }).type('{enter}');
+    cy.get('.p-chips-input-token > input').should('be.visible').type('港口', { force: true }).type('{enter}');
     cy.get('button').contains('儲存').click();
     cy.get('.swal2-actions > button').contains('OK').click();
     cy.get('.p-card-content > .flex-column > :nth-child(2)').click();
