@@ -53,13 +53,15 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
   });
 
   it('快捷轉自訂', () => {
-    cy.intercept('POST', 'api/chart').as('chartAPI');
+    cy.intercept('POST', 'api/chart*').as('chartAPI');
     cy.visit('https://imarine.motcmpb.gov.tw/#/statistics/0/0');
+    cy.wait('@chartAPI');
 
-    cy.wait('@chartAPI').then(() => {
-      cy.get('.statistics-content  [aria-label="自訂查詢"]').click();
-      cy.contains('自訂維度').should('be.visible');
-    });
+    cy.get('.statistics-content [aria-label="自訂查詢"]').should('be.visible').click();
+    cy.location('hash').should('eq', '#/custom/statistics');
+
+    cy.wait('@chartAPI');
+    cy.contains('自訂維度').should('be.visible');
   });
 
   it('點擊快捷報表報表側欄 會 顯示報表 ', () => {
@@ -211,7 +213,7 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
       })
       .then(() => {
         cy.get('[aria-label="儲存報表"] > .p-button-label').click();
-        cy.get('#MyReportName').type('test');
+        cy.get('input[id="MyReportName"]').should('be.visible').and('not.be.disabled').type('test', { force: true });
         cy.get('[aria-label="儲存"] > .p-button-label').click();
       });
     cy.get('.p-card.mb-2 > .p-card-body > .p-card-content > :nth-child(1)').contains('test');
@@ -233,11 +235,13 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
   });
 
   it('在搜尋頁查詢關鍵字 會 搜尋關鍵字並反白顯示', () => {
+    cy.intercept('GET', '**/api/news/search*').as('searchAPI');
     cy.visit('https://imarine.motcmpb.gov.tw/#/search');
     cy.get('.p-inputtext').type('巴拿馬運河');
     cy.get('#app .view-background .justify-content-center button').click();
+    cy.wait('@searchAPI').its('response.statusCode').should('eq', 200);
 
-    cy.contains('巴拿馬運河').should('be.visible').and('have.css', 'background-color', 'rgb(255, 255, 0)');
+    cy.contains('巴拿馬運河', { timeout: 10000 }).should('be.visible').and('have.css', 'background-color', 'rgb(255, 255, 0)');
   });
 
   it('點擊郵輪旅客國籍 會 進入郵輪旅客國籍', () => {
