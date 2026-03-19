@@ -7,7 +7,13 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
   it('點擊關於我們 會 進入關於我們', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#header a[title="關於我們"]').click();
+    cy.get('#header').within(() => {
+      cy.contains('a, span', '訊息分享').click();
+
+      cy.contains('重要公告').should('be.visible');
+      cy.contains('研究報告').should('be.visible');
+      cy.contains('關於我們').should('be.visible').click();
+    });
 
     cy.contains('h2', '關於我們').should('be.visible');
   });
@@ -93,7 +99,6 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
       cy.contains('a, span', '臺灣數據統計').click();
       cy.get('a[title="自訂查詢"]').should('be.visible').click();
     });
-
 
     cy.contains('自訂維度選項').should('be.visible');
   });
@@ -289,9 +294,12 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
   it('點擊航港法令 會 進入航港法令', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('a[title="航港法令索引"]').click({ force: true });
+    cy.get('#header').within(() => {
+      cy.contains('a, span', '航港法令').click();
+      cy.get('a[title="航港法令索引"]').click({ force: true });
+    });
 
-    cy.contains('h4', '近期法令異動').should('be.visible');
+    cy.contains('h3', '近期法令異動').should('be.visible');
   });
 
   it('點擊港口比較 會 進入港口比較', () => {
