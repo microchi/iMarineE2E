@@ -38,14 +38,14 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
   it('點擊首頁側欄icon - 簡易查詢 會 切換到對應頁面', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('li[title="簡易查詢"]').click();
+    cy.get('a[title="跳轉至: 簡易查詢區塊"]').click();
 
     cy.get('#simple-statistics > .container > .section-title').should('be.visible').and('have.text', '臺灣數據統計-簡易查詢');
   });
 
   it('點擊首頁側欄icon - 航港法令 會 切換到對應頁面', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('li[title="航港法令').click();
+    cy.get('a[title="跳轉至: 航港法令區塊"]').click();
 
     cy.get('.row > .section-title').should('be.visible').and('contain.text', '航港法令');
   });
@@ -80,7 +80,7 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
   it('點擊首頁臺灣航運指數卡片 會 顯示航運指數', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#sidebar li[title="航運指數"]').click();
+    cy.get('#sidebar a[title="跳轉至: 航運指數區塊"]').click();
     cy.get('#points button[aria-label*="查看"]').filter(':visible').first().click();
 
     cy.contains('button', '重置縮放').should('be.visible');
@@ -260,7 +260,7 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
   it('點擊郵輪旅客國籍 會 進入郵輪旅客國籍', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#sidebar li[title="快捷查詢"]').click();
+    cy.get('#sidebar a[title="跳轉至: 快捷查詢區塊"]').click();
     cy.contains('a, span', '臺灣郵輪旅客各國籍人次').click({ force: true });
 
     cy.contains('h2', '快捷查詢 - 臺灣郵輪旅客各國籍人次').should('be.visible');
@@ -268,7 +268,7 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
   it('點擊海港自由港區進口貿易值貿易量 會 進入海港自由港區進口貿易值貿易量', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#sidebar li[title="快捷查詢"]').click();
+    cy.get('#sidebar a[title="跳轉至: 快捷查詢區塊"]').click();
     cy.contains('a, span', '海港自由港區進口貿易值貿易量').click({ force: true });
 
     cy.contains('h2', '快捷查詢 - 海港自由港區進口貿易值貿易量').should('be.visible');
@@ -276,7 +276,7 @@ describe('iMarine 航港發展資料庫 整合測試', () => {
 
   it('點擊臺灣進出口國輪外輪承運量 會 進入臺灣進出口國輪外輪承運量', () => {
     cy.visit('https://imarine.motcmpb.gov.tw/#/');
-    cy.get('#sidebar li[title="快捷查詢"]').click();
+    cy.get('#sidebar a[title="跳轉至: 快捷查詢區塊"]').click();
     cy.contains('a, span', '臺灣進出口國輪外輪承運量').click({ force: true });
 
     cy.contains('h2', '快捷查詢 - 臺灣進出口國輪外輪承運量').should('be.visible');
